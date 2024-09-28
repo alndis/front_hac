@@ -19,6 +19,7 @@ const Modal = ({children, visible, setVisible, isAuthorized, setIsAuthorized  })
       setError(null); // сбрасываем ошибку, если пароли совпадают
       setSuccess(true); // выводим сообщение об успешной авторизации
       setIsAuthorized(true); // устанавливаем статус авторизации
+      setVisible(false);
       // Здесь можно отправить форму на сервер
       console.log('Форма отправлена');
     }

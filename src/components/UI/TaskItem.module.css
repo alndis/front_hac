@@ -1,4 +1,5 @@
 .new__task {
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,6 +14,7 @@
 }
 
 .task__content {
+    border-radius: 10px;
     border: 2px solid teal;
     height: 100%;
     display: flex;

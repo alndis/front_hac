@@ -14,17 +14,12 @@ const TaskItem = (props) =>{
     }
 
     return (
-        <div className={styles.task__content}>
+        <div className={styles.task__content} onClick={() => props.onEdit(props.task)}>
             <div className={styles.task}>
                 <strong>{props.number}. {props.task.title}</strong>
                 <div>
                     {props.task.body}
                 </div>
-            </div>
-            <div className={styles.task__btn}>
-            <MyButton onClick={() => {
-                 props.remove(props.task.id)
-                }} className={styles.btn}>Удалить</MyButton>
             </div>
         </div>
     )

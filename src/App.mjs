@@ -3,8 +3,8 @@ import './styles/App.css';
 import TaskItem from "./components/TaskItem.jsx";
 import MyButton from "./components/UI/button/MyButton.jsx";
 import Modal from "./components/UI/modal/Modal.jsx";
-import Image from "./components/UI/img/Image.jsx";
 import NewTaskModal from "./components/UI/newTask/NewTaskModal.jsx";
+import RedTask from "./components/UI/redTask/RedTask.jsx";
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -19,6 +19,8 @@ function App() {
   const [modal, setModal] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [newTaskModal, setNewTaskModal] = useState(false);
+  const [redTaskModal, setRedTaskModal] = useState(false);
+  const [currentTask, setCurrentTask] = useState(null);
 
   const handleShowAll = () => {
     setShowAll(!showAll);
@@ -34,6 +36,16 @@ function App() {
     setNewTaskModal(false);
   };
 
+  const onEditTask = (task) => {
+    setCurrentTask(task);
+    setRedTaskModal(true);
+  };
+
+  const onSaveTask = (task) => {
+    setTasks([...tasks.map(t => t.id === task.id ? task : t)]);
+    setRedTaskModal(false);
+  };
+
   return (
     <div className="App">
       <div className="head">
@@ -46,6 +58,7 @@ function App() {
       </div>
       <Modal visible={modal} setVisible={setModal} isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized} />
       <NewTaskModal visible={newTaskModal} setVisible={setNewTaskModal} onCreateTask={onCreateTask} />
+      <RedTask visible={redTaskModal} setVisible={setRedTaskModal} task={currentTask} onSaveTask={onSaveTask} onDeleteTask={removeTask} />
       <div>
       {showAll ? (
           <MyButton onClick={handleShowAll}>Скрыть все</MyButton>
@@ -57,11 +70,11 @@ function App() {
         <div className="tasks__fiels">
           {showAll ? (
             tasks.map((task) => {
-              return <TaskItem remove={removeTask} task={task} key={task.id} />;
+              return <TaskItem remove={removeTask} task={task} key={task.id} onEdit={onEditTask} />;
             })
           ) : (
             tasks.slice(0, maxTasks).map((task, index) => {
-              return <TaskItem remove={removeTask} number={index+1} task={task} key={task.id} />;
+              return <TaskItem remove={removeTask} number={index+1} task={task} key={task.id} onEdit={onEditTask} />;
             })
           )}
           <TaskItem
@@ -69,8 +82,13 @@ function App() {
           onClick={() => setNewTaskModal(true)}/>
         </div>
       ) : (
-        <Image />
+        <p></p>
       )}
+      <footer className="footer">
+        <div className="footer__content">
+          <p>&copy; 2024 SLON_ISLAND. Все права защищены<a href="https://contract.mos.ru/" target="_blank" className="footer__link">.</a></p>
+        </div>
+      </footer>
     </div>
   );
 }

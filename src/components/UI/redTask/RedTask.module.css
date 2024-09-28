@@ -1,6 +1,5 @@
-.newTaskModal {
+.redTask {
     position: fixed;
-    
     top: 0;
     left: 0;
     width: 100%;
@@ -11,52 +10,61 @@
     align-items: center;
     pointer-events: none;
     z-index: 1000;
-  }
-  .newTaskModal.active {
+}
+
+.redTask.active {
     display: flex;
     justify-content: center;
     align-items: center;
     pointer-events: auto;
-  }
-  .newTaskModalContent {
+}
+
+.redTaskContent {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 500px;
     max-width: 90%;
-  }
-  
-  .newTaskModalContent h2 {
+}
+
+.redTaskContent h2 {
     margin-top: 0;
-  }
-  
-  .newTaskModalContent form {
-    margin-top: 20px;
-  }
-  
-  .newTaskModalContent label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .newTaskModalContent input, .newTaskModalContent textarea {
+}
+
+.redTaskContent input, .redTaskContent textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  .newTaskModalContent button[type="submit"] {
+}
+
+.redTaskContent button {
     background-color: #4CAF50;
     color: #fff;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .newTaskModalContent button[type="submit"]:hover {
+}
+
+.redTaskContent button:hover {
     background-color: #3e8e41;
-  }
+}
+
+.redTask__header {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.redTask__body {
+    padding: 20px;
+}
+
+.redTask__footer {
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    text-align: right;
+}
