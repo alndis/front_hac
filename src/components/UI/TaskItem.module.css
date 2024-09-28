@@ -1,0 +1,33 @@
+.new__task {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex: 1;
+}
+
+.task {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.task__content {
+    border: 2px solid teal;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.task__btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    left: 0;
+    margin-top: auto;
+}
+
+.btn{
+    margin-left: 5px;
+}

@@ -1,0 +1,38 @@
+ *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+ }
+ #root{
+    display: flex;
+    justify-content: center;
+}
+ .App {
+    width: 100%;
+ }
+ .head {
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px;
+    border: 2px solid teal;
+    margin: 15px;
+
+ }
+ .tasks__fiels{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-evenly;
+   padding: 0px;
+   border: 2px solid teal;
+   margin: 5px;
+   height: 350px;
+   gap: 2%;
+}
+
+a {
+   text-decoration: none;
+   color: inherit;
+ }
+
