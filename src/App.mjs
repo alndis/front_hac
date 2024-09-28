@@ -5,6 +5,8 @@ import MyButton from "./components/UI/button/MyButton.jsx";
 import Modal from "./components/UI/modal/Modal.jsx";
 import NewTaskModal from "./components/UI/newTask/NewTaskModal.jsx";
 import RedTask from "./components/UI/redTask/RedTask.jsx";
+import EnterModal from "./components/UI/EnterModal/EnterModal.jsx";
+
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -21,6 +23,8 @@ function App() {
   const [newTaskModal, setNewTaskModal] = useState(false);
   const [redTaskModal, setRedTaskModal] = useState(false);
   const [currentTask, setCurrentTask] = useState(null);
+  const [enterVisible, setEnterVisible] = useState(false);
+
 
   const handleShowAll = () => {
     setShowAll(!showAll);
@@ -46,26 +50,31 @@ function App() {
     setRedTaskModal(false);
   };
 
-  return (
-    <div className="App">
-      <div className="head">
-        <h1>ZOV</h1>
-        {isAuthorized ? (
-          <MyButton onClick={() => setIsAuthorized(false)}>Выйти</MyButton>
-        ) : (
+
+ return (
+  <div className="App">
+    <div className="head">
+      <h1>ZOV</h1>
+      {isAuthorized ? (
+        <MyButton onClick={() => setIsAuthorized(false)}>Выйти</MyButton>
+      ) : (
+        <div>
           <MyButton onClick={() => setModal(true)}>Регистрация</MyButton>
-        )}
-      </div>
-      <Modal visible={modal} setVisible={setModal} isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized} />
-      <NewTaskModal visible={newTaskModal} setVisible={setNewTaskModal} onCreateTask={onCreateTask} />
-      <RedTask visible={redTaskModal} setVisible={setRedTaskModal} task={currentTask} onSaveTask={onSaveTask} onDeleteTask={removeTask} />
-      <div>
+          <MyButton onClick={() => setEnterVisible(true)}>Вход</MyButton>
+        </div>
+      )}
+    </div>
+    {modal && (<Modal visible={modal} setVisible={setModal} isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized} />)}
+    {enterVisible && (<EnterModal visible={enterVisible} setVisible={setEnterVisible} isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized} />)}
+    <NewTaskModal visible={newTaskModal} setVisible={setNewTaskModal} onCreateTask={onCreateTask} />
+    <RedTask visible={redTaskModal} setVisible={setRedTaskModal} task={currentTask} onSaveTask={onSaveTask} onDeleteTask={removeTask} />
+    <div>
       {showAll ? (
-          <MyButton onClick={handleShowAll}>Скрыть все</MyButton>
-        ) : (
-          <MyButton onClick={handleShowAll}>Показать все</MyButton>
-        )}
-      </div>
+        <MyButton onClick={handleShowAll}>Скрыть все</MyButton>
+      ) : (
+        <MyButton onClick={handleShowAll}>Показать все</MyButton>
+      )}
+    </div>
       {isAuthorized ? (
         <div className="tasks__fiels">
           {showAll ? (

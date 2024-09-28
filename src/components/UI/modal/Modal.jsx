@@ -1,15 +1,21 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import cl from './modal.module.css'
-const Modal = ({children, visible, setVisible, isAuthorized, setIsAuthorized  }) => {
-  const rootClasses = [cl.modal]
+import axios from 'axios';
+
+const Modal = ({ children, visible, setVisible, isAuthorized, setIsAuthorized }) => {
+  const rootClasses = [cl.newTaskModal]
   if (visible){
     rootClasses.push(cl.active);
   }
-
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+
+  const handleClose = useCallback(() => {
+    setVisible(false);
+  }, [setVisible]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,11 +23,29 @@ const Modal = ({children, visible, setVisible, isAuthorized, setIsAuthorized  })
       setError('Пароли не совпадают');
     } else {
       setError(null); // сбрасываем ошибку, если пароли совпадают
-      setSuccess(true); // выводим сообщение об успешной авторизации
-      setIsAuthorized(true); // устанавливаем статус авторизации
-      setVisible(false);
-      // Здесь можно отправить форму на сервер
-      console.log('Форма отправлена');
+      setSuccess(false); // сбрасываем сообщение об успешной авторизации
+  
+      // Send registration data to the server
+      axios.post('/api/register', {
+        username: username,
+        password: password,
+      })
+      .then(response => {
+        const token = response.data.token;
+        // Store the token in local storage or cookies
+        localStorage.setItem('token', token);
+        console.log('Registration successful!');
+        setSuccess(true); // выводим сообщение об успешной авторизации
+        setIsAuthorized(true); // устанавливаем статус авторизации
+        handleClose();
+      })
+      .catch(error => {
+        setError('Ошибка регистрации. Сервер не отвечает.'); // выводим сообщение об ошибке
+        console.error(error);
+        setTimeout(() => {
+          handleClose(); // закрываем модальное окно после успешной регистрации
+        }, 2000);
+      });
     }
   };
 
@@ -33,13 +57,13 @@ const Modal = ({children, visible, setVisible, isAuthorized, setIsAuthorized  })
   }, [visible]);
 
   return (
-    <div className={rootClasses.join(" ")} onClick={() => setVisible(false)}>
+    <div className={rootClasses.join(" ")} onClick={handleClose}>
       <div className={cl.modalContent} onClick={(e) => e.stopPropagation()}>
         <h2>Регистрация</h2>
         <form onSubmit={handleSubmit}>
           <label>
             Логин:
-            <input type="text" />
+            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
           </label>
           <label>
             Пароль:

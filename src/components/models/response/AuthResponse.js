@@ -1,3 +1,0 @@
-const AuthResponse = {
-    accessToken: string,
-}
